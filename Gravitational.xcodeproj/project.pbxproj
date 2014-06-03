@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF08CD92192B5B3400DF5D3F /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF08CD91192B5B3400DF5D3F /* arrow@2x.png */; };
+		DF08CD95192B605100DF5D3F /* digitObstacle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF08CD93192B605100DF5D3F /* digitObstacle@2x.png */; };
+		DF08CD96192B605100DF5D3F /* operatorObstacle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DF08CD94192B605100DF5D3F /* operatorObstacle@2x.png */; };
+		DF3BC3FD1937875E0045221D /* ArrowBurst.sks in Resources */ = {isa = PBXBuildFile; fileRef = DF3BC3FB1937875E0045221D /* ArrowBurst.sks */; };
+		DF3BC4071937A4410045221D /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3BC4051937A4410045221D /* spark.png */; };
+		DF3BC40D1937B22C0045221D /* arrow_particle.png in Resources */ = {isa = PBXBuildFile; fileRef = DF3BC40C1937B22C0045221D /* arrow_particle.png */; };
+		DF43FEE91926904100ED2C84 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = DF43FEE81926904100ED2C84 /* MenuScene.m */; };
+		DF43FEEE1929306B00ED2C84 /* TaskGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = DF43FEED1929306B00ED2C84 /* TaskGenerator.m */; };
+		DF43FEFA19296A9000ED2C84 /* Arrow.m in Sources */ = {isa = PBXBuildFile; fileRef = DF43FEF919296A9000ED2C84 /* Arrow.m */; };
+		DF43FEFD1929725300ED2C84 /* Floor.m in Sources */ = {isa = PBXBuildFile; fileRef = DF43FEFC1929725300ED2C84 /* Floor.m */; };
+		DF43FF011929733A00ED2C84 /* artwork.atlas in Resources */ = {isa = PBXBuildFile; fileRef = DF43FF001929733A00ED2C84 /* artwork.atlas */; };
+		DF43FF051929FFB000ED2C84 /* Background.m in Sources */ = {isa = PBXBuildFile; fileRef = DF43FF041929FFB000ED2C84 /* Background.m */; };
+		DF43FF08192A11DA00ED2C84 /* PauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DF43FF07192A11DA00ED2C84 /* PauseButton.m */; };
+		DF43FF0F192A26B600ED2C84 /* Sabo-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DF43FF0E192A269D00ED2C84 /* Sabo-Regular.otf */; };
+		DF43FF12192A309500ED2C84 /* TaskObstacle.m in Sources */ = {isa = PBXBuildFile; fileRef = DF43FF11192A309500ED2C84 /* TaskObstacle.m */; };
+		DF43FF18192A485B00ED2C84 /* unispace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF43FF17192A485500ED2C84 /* unispace.ttf */; };
+		DF43FF1C192AB37400ED2C84 /* unispace_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF43FF1B192AB36600ED2C84 /* unispace_bold.ttf */; };
 		DF4D19C518B69D2F00526285 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4D19C418B69D2F00526285 /* Foundation.framework */; };
 		DF4D19C718B69D2F00526285 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4D19C618B69D2F00526285 /* CoreGraphics.framework */; };
 		DF4D19C918B69D2F00526285 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4D19C818B69D2F00526285 /* UIKit.framework */; };
@@ -17,8 +34,7 @@
 		DF4D19DA18B69D2F00526285 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF4D19D818B69D2F00526285 /* Main_iPhone.storyboard */; };
 		DF4D19DD18B69D2F00526285 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF4D19DB18B69D2F00526285 /* Main_iPad.storyboard */; };
 		DF4D19E018B69D2F00526285 /* GravitationalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4D19DF18B69D2F00526285 /* GravitationalViewController.m */; };
-		DF4D19E318B69D2F00526285 /* GravitationalMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4D19E218B69D2F00526285 /* GravitationalMyScene.m */; };
-		DF4D19E518B69D2F00526285 /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = DF4D19E418B69D2F00526285 /* Spaceship.png */; };
+		DF4D19E318B69D2F00526285 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = DF4D19E218B69D2F00526285 /* GameScene.m */; };
 		DF4D19E718B69D2F00526285 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF4D19E618B69D2F00526285 /* Images.xcassets */; };
 		DF4D19EE18B69D2F00526285 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4D19ED18B69D2F00526285 /* XCTest.framework */; };
 		DF4D19EF18B69D2F00526285 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4D19C418B69D2F00526285 /* Foundation.framework */; };
@@ -38,6 +54,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF08CD91192B5B3400DF5D3F /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
+		DF08CD93192B605100DF5D3F /* digitObstacle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "digitObstacle@2x.png"; sourceTree = "<group>"; };
+		DF08CD94192B605100DF5D3F /* operatorObstacle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "operatorObstacle@2x.png"; sourceTree = "<group>"; };
+		DF3BC3FB1937875E0045221D /* ArrowBurst.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ArrowBurst.sks; sourceTree = "<group>"; };
+		DF3BC4051937A4410045221D /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		DF3BC40C1937B22C0045221D /* arrow_particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_particle.png; sourceTree = "<group>"; };
+		DF43FEE71926904100ED2C84 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
+		DF43FEE81926904100ED2C84 /* MenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
+		DF43FEEC1929306B00ED2C84 /* TaskGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskGenerator.h; sourceTree = "<group>"; };
+		DF43FEED1929306B00ED2C84 /* TaskGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskGenerator.m; sourceTree = "<group>"; };
+		DF43FEF819296A9000ED2C84 /* Arrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arrow.h; sourceTree = "<group>"; };
+		DF43FEF919296A9000ED2C84 /* Arrow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Arrow.m; sourceTree = "<group>"; };
+		DF43FEFB1929725300ED2C84 /* Floor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Floor.h; sourceTree = "<group>"; };
+		DF43FEFC1929725300ED2C84 /* Floor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Floor.m; sourceTree = "<group>"; };
+		DF43FF001929733A00ED2C84 /* artwork.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = artwork.atlas; sourceTree = "<group>"; };
+		DF43FF031929FFB000ED2C84 /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
+		DF43FF041929FFB000ED2C84 /* Background.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Background.m; sourceTree = "<group>"; };
+		DF43FF06192A11DA00ED2C84 /* PauseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseButton.h; sourceTree = "<group>"; };
+		DF43FF07192A11DA00ED2C84 /* PauseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PauseButton.m; sourceTree = "<group>"; };
+		DF43FF0E192A269D00ED2C84 /* Sabo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sabo-Regular.otf"; sourceTree = "<group>"; };
+		DF43FF10192A309500ED2C84 /* TaskObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskObstacle.h; sourceTree = "<group>"; };
+		DF43FF11192A309500ED2C84 /* TaskObstacle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskObstacle.m; sourceTree = "<group>"; };
+		DF43FF17192A485500ED2C84 /* unispace.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = unispace.ttf; sourceTree = "<group>"; };
+		DF43FF1B192AB36600ED2C84 /* unispace_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = unispace_bold.ttf; sourceTree = "<group>"; };
 		DF4D19C118B69D2F00526285 /* Gravitational.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gravitational.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF4D19C418B69D2F00526285 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF4D19C618B69D2F00526285 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,9 +93,8 @@
 		DF4D19DC18B69D2F00526285 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		DF4D19DE18B69D2F00526285 /* GravitationalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GravitationalViewController.h; sourceTree = "<group>"; };
 		DF4D19DF18B69D2F00526285 /* GravitationalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GravitationalViewController.m; sourceTree = "<group>"; };
-		DF4D19E118B69D2F00526285 /* GravitationalMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GravitationalMyScene.h; sourceTree = "<group>"; };
-		DF4D19E218B69D2F00526285 /* GravitationalMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GravitationalMyScene.m; sourceTree = "<group>"; };
-		DF4D19E418B69D2F00526285 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
+		DF4D19E118B69D2F00526285 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		DF4D19E218B69D2F00526285 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		DF4D19E618B69D2F00526285 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF4D19EC18B69D2F00526285 /* GravitationalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GravitationalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF4D19ED18B69D2F00526285 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -89,9 +128,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF3BC40319379FB60045221D /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				DF3BC3FB1937875E0045221D /* ArrowBurst.sks */,
+				DF3BC40C1937B22C0045221D /* arrow_particle.png */,
+			);
+			name = Particles;
+			sourceTree = "<group>";
+		};
+		DF43FF0219297CFB00ED2C84 /* GameSceneElements */ = {
+			isa = PBXGroup;
+			children = (
+				DF43FEF819296A9000ED2C84 /* Arrow.h */,
+				DF43FEF919296A9000ED2C84 /* Arrow.m */,
+				DF43FEFB1929725300ED2C84 /* Floor.h */,
+				DF43FEFC1929725300ED2C84 /* Floor.m */,
+				DF43FF031929FFB000ED2C84 /* Background.h */,
+				DF43FF041929FFB000ED2C84 /* Background.m */,
+				DF43FF06192A11DA00ED2C84 /* PauseButton.h */,
+				DF43FF07192A11DA00ED2C84 /* PauseButton.m */,
+				DF43FF10192A309500ED2C84 /* TaskObstacle.h */,
+				DF43FF11192A309500ED2C84 /* TaskObstacle.m */,
+			);
+			name = GameSceneElements;
+			sourceTree = "<group>";
+		};
+		DF43FF0C192A268900ED2C84 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DF08CD91192B5B3400DF5D3F /* arrow@2x.png */,
+				DF08CD93192B605100DF5D3F /* digitObstacle@2x.png */,
+				DF08CD94192B605100DF5D3F /* operatorObstacle@2x.png */,
+				DF3BC40319379FB60045221D /* Particles */,
+				DF43FF0D192A269200ED2C84 /* Fonts */,
+				DF43FF001929733A00ED2C84 /* artwork.atlas */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		DF43FF0D192A269200ED2C84 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DF43FF0E192A269D00ED2C84 /* Sabo-Regular.otf */,
+				DF43FF17192A485500ED2C84 /* unispace.ttf */,
+				DF43FF1B192AB36600ED2C84 /* unispace_bold.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		DF4D19B818B69D2F00526285 = {
 			isa = PBXGroup;
 			children = (
+				DF3BC4051937A4410045221D /* spark.png */,
 				DF4D19CC18B69D2F00526285 /* Gravitational */,
 				DF4D19F318B69D2F00526285 /* GravitationalTests */,
 				DF4D19C318B69D2F00526285 /* Frameworks */,
@@ -129,10 +218,15 @@
 				DF4D19DB18B69D2F00526285 /* Main_iPad.storyboard */,
 				DF4D19DE18B69D2F00526285 /* GravitationalViewController.h */,
 				DF4D19DF18B69D2F00526285 /* GravitationalViewController.m */,
-				DF4D19E118B69D2F00526285 /* GravitationalMyScene.h */,
-				DF4D19E218B69D2F00526285 /* GravitationalMyScene.m */,
-				DF4D19E418B69D2F00526285 /* Spaceship.png */,
+				DF4D19E118B69D2F00526285 /* GameScene.h */,
+				DF4D19E218B69D2F00526285 /* GameScene.m */,
+				DF43FF0219297CFB00ED2C84 /* GameSceneElements */,
+				DF43FEEC1929306B00ED2C84 /* TaskGenerator.h */,
+				DF43FEED1929306B00ED2C84 /* TaskGenerator.m */,
+				DF43FEE71926904100ED2C84 /* MenuScene.h */,
+				DF43FEE81926904100ED2C84 /* MenuScene.m */,
 				DF4D19E618B69D2F00526285 /* Images.xcassets */,
+				DF43FF0C192A268900ED2C84 /* Resources */,
 				DF4D19CD18B69D2F00526285 /* Supporting Files */,
 			);
 			path = Gravitational;
@@ -212,7 +306,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Gravitational;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Lennart Reiher";
 				TargetAttributes = {
 					DF4D19EB18B69D2F00526285 = {
@@ -244,11 +338,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF4D19E518B69D2F00526285 /* Spaceship.png in Resources */,
+				DF43FF18192A485B00ED2C84 /* unispace.ttf in Resources */,
+				DF08CD95192B605100DF5D3F /* digitObstacle@2x.png in Resources */,
 				DF4D19E718B69D2F00526285 /* Images.xcassets in Resources */,
 				DF4D19DD18B69D2F00526285 /* Main_iPad.storyboard in Resources */,
+				DF08CD96192B605100DF5D3F /* operatorObstacle@2x.png in Resources */,
+				DF3BC40D1937B22C0045221D /* arrow_particle.png in Resources */,
 				DF4D19DA18B69D2F00526285 /* Main_iPhone.storyboard in Resources */,
+				DF43FF1C192AB37400ED2C84 /* unispace_bold.ttf in Resources */,
+				DF43FF0F192A26B600ED2C84 /* Sabo-Regular.otf in Resources */,
+				DF3BC4071937A4410045221D /* spark.png in Resources */,
+				DF43FF011929733A00ED2C84 /* artwork.atlas in Resources */,
 				DF4D19D118B69D2F00526285 /* InfoPlist.strings in Resources */,
+				DF08CD92192B5B3400DF5D3F /* arrow@2x.png in Resources */,
+				DF3BC3FD1937875E0045221D /* ArrowBurst.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,9 +371,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF4D19D718B69D2F00526285 /* GravitationalAppDelegate.m in Sources */,
+				DF43FF12192A309500ED2C84 /* TaskObstacle.m in Sources */,
+				DF43FEE91926904100ED2C84 /* MenuScene.m in Sources */,
+				DF43FEEE1929306B00ED2C84 /* TaskGenerator.m in Sources */,
 				DF4D19E018B69D2F00526285 /* GravitationalViewController.m in Sources */,
-				DF4D19E318B69D2F00526285 /* GravitationalMyScene.m in Sources */,
+				DF43FF051929FFB000ED2C84 /* Background.m in Sources */,
+				DF43FEFD1929725300ED2C84 /* Floor.m in Sources */,
+				DF4D19E318B69D2F00526285 /* GameScene.m in Sources */,
 				DF4D19D318B69D2F00526285 /* main.m in Sources */,
+				DF43FF08192A11DA00ED2C84 /* PauseButton.m in Sources */,
+				DF43FEFA19296A9000ED2C84 /* Arrow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +442,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -372,7 +481,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -433,7 +541,6 @@
 		DF4D1A0118B69D2F00526285 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Gravitational.app/Gravitational";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -456,7 +563,6 @@
 		DF4D1A0218B69D2F00526285 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Gravitational.app/Gravitational";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -491,6 +597,7 @@
 				DF4D19FF18B69D2F00526285 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF4D1A0018B69D2F00526285 /* Build configuration list for PBXNativeTarget "GravitationalTests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +606,7 @@
 				DF4D1A0218B69D2F00526285 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

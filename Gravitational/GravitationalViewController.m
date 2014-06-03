@@ -7,7 +7,7 @@
 //
 
 #import "GravitationalViewController.h"
-#import "GravitationalMyScene.h"
+#import "MenuScene.h"
 
 @implementation GravitationalViewController
 
@@ -19,9 +19,10 @@
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
+    skView.showsPhysics = NO;
     
     // Create and configure the scene.
-    SKScene * scene = [GravitationalMyScene sceneWithSize:skView.bounds.size];
+    SKScene * scene = [MenuScene sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.
@@ -30,6 +31,10 @@
 
 - (BOOL)shouldAutorotate
 {
+    return NO;
+}
+
+- (BOOL)prefersStatusBarHidden {
     return YES;
 }
 
