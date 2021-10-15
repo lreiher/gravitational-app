@@ -8,7 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface Background : SKSpriteNode
+@interface Background : SKSpriteNode {
+    
+}
 
 +(id)backgroundWithPosition:(CGPoint)pPosition;
 

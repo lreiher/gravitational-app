@@ -1,0 +1,328 @@
+{
+    "assets": [
+        {
+            "asset": "Gravitational/unispace.ttf", 
+            "target": "unispace.ttf"
+        }, 
+        {
+            "asset": "Gravitational/digitObstacle@2x.png", 
+            "target": "digitObstacle@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/operatorObstacle@2x.png", 
+            "target": "operatorObstacle@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/unispace_bold.ttf", 
+            "target": "unispace_bold.ttf"
+        }, 
+        {
+            "asset": "Gravitational/Sabo-Regular.otf", 
+            "target": "Sabo-Regular.otf"
+        }, 
+        {
+            "asset": "Gravitational/artwork.atlas/.DS_Store", 
+            "target": "artwork.atlas/.DS_Store"
+        }, 
+        {
+            "asset": "Gravitational/artwork.atlas/arrow1@2x.png", 
+            "target": "artwork.atlas/arrow1@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/artwork.atlas/background-568@2x.png", 
+            "target": "artwork.atlas/background-568@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/artwork.atlas/background@2x.png", 
+            "target": "artwork.atlas/background@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/artwork.atlas/floor@2x.png", 
+            "target": "artwork.atlas/floor@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/artwork.atlas/floorBar@2x.png", 
+            "target": "artwork.atlas/floorBar@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/artwork.atlas/floors@2x.png", 
+            "target": "artwork.atlas/floors@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/artwork.atlas/pause@2x.png", 
+            "target": "artwork.atlas/pause@2x.png"
+        }, 
+        {
+            "asset": "Gravitational/en.lproj/InfoPlist.strings", 
+            "target": "en.lproj/InfoPlist.strings"
+        }, 
+        {
+            "asset": "Gravitational/arrow@2x.png", 
+            "target": "arrow@2x.png"
+        }
+    ], 
+    "config": {
+        "APPLICATION_FULL_NAME": "Gravitational", 
+        "APPLICATION_IDENTIFIER": "lennart.reiher.Gravitational", 
+        "APPLICATION_NAME": "Gravitational", 
+        "FEATURES": [
+            "opengles2", 
+            "portrait"
+        ], 
+        "ICU_CONFIG": "normal", 
+        "LONG_VERSION": "1.0", 
+        "SHORT_VERSION": "1.0", 
+        "TEMPLATE_VALUES": {
+            "EXECUTABLE_NAME": "Gravitational", 
+            "PRODUCT_NAME": "Gravitational"
+        }
+    }, 
+    "defines": {
+        "NS_BLOCK_ASSERTIONS": 1, 
+        "__IPHONE_OS_VERSION_MIN_REQUIRED": 70000
+    }, 
+    "deps": [
+        "UIKit", 
+        "CoreGraphics", 
+        "UIKit", 
+        "SpriteKit", 
+        "Foundation"
+    ], 
+    "flags": [
+        "-fobjc-arc", 
+        "-fasm-blocks", 
+        {
+            "flag": "-std=gnu99", 
+            "not_type": "c++"
+        }, 
+        {
+            "flag": "-fgnu-keywords", 
+            "not_type": "c++"
+        }, 
+        "-fno-asm", 
+        "-fpascal-strings", 
+        "-Wempty-body", 
+        "-Wshorten-64-to-32", 
+        "-Wno-deprecated-declarations", 
+        "-Wswitch", 
+        "-Wparentheses", 
+        "-Wformat", 
+        "-Wuninitialized", 
+        "-Wunused-function", 
+        "-Wunused-value", 
+        "-Wunused-variable", 
+        {
+            "flag": "-Winvalid-offsetof", 
+            "type": "c++"
+        }, 
+        {
+            "flag": "-Wprotocol", 
+            "type": "objc"
+        }, 
+        {
+            "flag": "-Wundeclared-selector", 
+            "type": "objc"
+        }
+    ], 
+    "header_paths": [
+        {
+            "header_path": "Gravitational-generated-files.hmap", 
+            "hmap": {}, 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "Gravitational-own-target-headers.hmap", 
+            "hmap": {}, 
+            "type": "I"
+        }, 
+        {
+            "header_path": "Gravitational-all-target-headers.hmap", 
+            "hmap": {}, 
+            "type": "I"
+        }, 
+        {
+            "header_path": "Gravitational-project-headers.hmap", 
+            "hmap": {
+                "Arrow.h": {
+                    "key": "Arrow.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "Arrow.h"
+                }, 
+                "Background.h": {
+                    "key": "Background.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "Background.h"
+                }, 
+                "Floor.h": {
+                    "key": "Floor.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "Floor.h"
+                }, 
+                "GameScene.h": {
+                    "key": "GameScene.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "GameScene.h"
+                }, 
+                "Gravitational-Prefix.pch": {
+                    "key": "Gravitational-Prefix.pch", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "Gravitational-Prefix.pch"
+                }, 
+                "GravitationalAppDelegate.h": {
+                    "key": "GravitationalAppDelegate.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "GravitationalAppDelegate.h"
+                }, 
+                "GravitationalViewController.h": {
+                    "key": "GravitationalViewController.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "GravitationalViewController.h"
+                }, 
+                "MenuScene.h": {
+                    "key": "MenuScene.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "MenuScene.h"
+                }, 
+                "PauseButton.h": {
+                    "key": "PauseButton.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "PauseButton.h"
+                }, 
+                "TaskGenerator.h": {
+                    "key": "TaskGenerator.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "TaskGenerator.h"
+                }, 
+                "TaskObstacle.h": {
+                    "key": "TaskObstacle.h", 
+                    "prefix": "Gravitational/", 
+                    "suffix": "TaskObstacle.h"
+                }
+            }, 
+            "type": "iquote"
+        }, 
+        {
+            "header_path": "/var/folders/03/qgqjrhdx6gv4d20nrk80zs1r0000gn/T/tmpzSkd3L/BUILT_PRODUCTS_DIR/include", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "/var/folders/03/qgqjrhdx6gv4d20nrk80zs1r0000gn/T/tmpzSkd3L/DERIVED_FILE_DIR/armv7", 
+            "type": "I"
+        }, 
+        {
+            "header_path": "/var/folders/03/qgqjrhdx6gv4d20nrk80zs1r0000gn/T/tmpzSkd3L/DERIVED_FILE_DIR", 
+            "type": "I"
+        }
+    ], 
+    "infoplists": [
+        "./Gravitational/Gravitational-Info.plist"
+    ], 
+    "java_libs": [], 
+    "java_res_dirs": [], 
+    "java_sourcepaths": [], 
+    "java_sources": [], 
+    "libs": [], 
+    "link_flags": [], 
+    "modules": [], 
+    "pchs": [
+        "./Gravitational/Gravitational-Prefix.pch"
+    ], 
+    "sources": [
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/Arrow.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/Background.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/Floor.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/GameScene.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/GravitationalAppDelegate.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/GravitationalViewController.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/MenuScene.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/PauseButton.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/TaskGenerator.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/TaskObstacle.m"
+        }, 
+        {
+            "defines": {}, 
+            "flags": [], 
+            "header_paths": [], 
+            "language": "objc", 
+            "source": "Gravitational/main.m"
+        }
+    ], 
+    "storyboards": [
+        {
+            "storyboard": "Gravitational/Base.lproj/Main_iPad.storyboard", 
+            "target": null
+        }, 
+        {
+            "storyboard": "Gravitational/Base.lproj/Main_iPhone.storyboard", 
+            "target": null
+        }
+    ], 
+    "type": "app", 
+    "version": "3", 
+    "xcdatamodels": [], 
+    "xcode_project": "Gravitational.xcodeproj", 
+    "xibs": []
+}

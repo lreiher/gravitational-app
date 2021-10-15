@@ -8,8 +8,15 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface Floor : SKSpriteNode
+@interface Floor : SKSpriteNode {
+    
+}
 
-+(id)floorWithPosition:(CGPoint)pPosition andScale:(CGFloat)pScale;
++(id)floorWithPosition:(CGPoint)pPosition;
+
+-(void)animatePause:(BOOL)enabled duration:(CGFloat)duration;
+-(void)handlePanDownWithTranslation:(CGPoint)translation andVelocity:(CGPoint)velocity;
+-(void)handleQuickSwipeWithTranslation:(CGPoint)translation andVelocity:(CGPoint)velocity;
+-(BOOL)needsToBeUnpaused;
 
 @end

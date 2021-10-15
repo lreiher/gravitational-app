@@ -8,6 +8,23 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface GameScene : SKScene <SKPhysicsContactDelegate>
+#import "MyScene.h"
+
+@protocol GameSceneDelegate <NSObject>
+-(void)showAdsAtTop:(BOOL)top;
+-(void)presentGameOver;
+-(void)presentMenu;
+-(void)sendGAIScreen:(NSString*)name;
+@end
+
+@interface GameScene : MyScene <SKPhysicsContactDelegate>
+
+@property (weak) id <GameSceneDelegate> delegate;
+
+-(void)reactToInterruption;
+-(void)unpauseGame;
+-(void)switchToMenu;
 
 @end
+
+

@@ -8,8 +8,21 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface MenuScene : SKScene
+#import "MyScene.h"
 
+@protocol MenuSceneDelegate <NSObject>
+-(void)hideAds;
+-(void)presentGameWithDirection:(int)dir;
+-(void)presentSettings;
+-(void)presentTutorial;
+-(void)showLeaderboard;
+-(void)sendGAIScreen:(NSString*)name;
+@end
 
+@interface MenuScene : MyScene
+    
+@property (weak) id <MenuSceneDelegate> delegate;
+
+-(void)switchToGame;
 
 @end

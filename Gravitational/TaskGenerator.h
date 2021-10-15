@@ -10,6 +10,8 @@
 
 @interface TaskGenerator : NSObject
 
-+ (NSString*)generate2DigitTask;
++(id)initTaskGenerator;
+
+-(NSString*)newTask;
 
 @end

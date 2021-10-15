@@ -7,12 +7,38 @@
 //
 
 #import "GravitationalAppDelegate.h"
+#import "GCHelper.h"
+#import "MKStoreManager.h"
+#import "GAI.h"
+#import "iRate.h"
 
 @implementation GravitationalAppDelegate
+
++ (void)initialize {
+    [iRate sharedInstance].previewMode = NO;
+    [iRate sharedInstance].appStoreGenreID = iRateAppStoreGameGenreID;
+    [iRate sharedInstance].daysUntilPrompt = 5;
+    [iRate sharedInstance].usesUntilPrompt = 10;
+    [iRate sharedInstance].remindPeriod = 2;
+    [iRate sharedInstance].useAllAvailableLanguages = NO;
+    [iRate sharedInstance].promptForNewVersionIfUserRated = YES;
+    [iRate sharedInstance].updateMessage = @"Thank you very much for having rated the app already. However, with a new version of Gravitational installed on your device, you might want to update your rating? You can also choose to never being asked again.";
+    [iRate sharedInstance].cancelButtonLabel = @"Never ask me again";
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [Global globals];
+    [GCHelper defaultHelper];
+    [MKStoreManager sharedManager];
+    
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    [GAI sharedInstance].dispatchInterval = 60;
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelError];
+    [[GAI sharedInstance] trackerWithTrackingId:@"UA-54647581-2"];
+    
     return YES;
 }
 							

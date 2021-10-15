@@ -8,8 +8,12 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface Arrow : SKSpriteNode
+@interface Arrow : SKSpriteNode {
+    
+}
 
-+(id)arrowWithPosition:(CGPoint)pPosition;
++(id)arrowWithPosition:(CGPoint)pPosition andPhysicsBody:(BOOL)pBoolPhysicsBody;
+
+-(void)animatePause:(BOOL)enabled duration:(CGFloat)duration;
 
 @end

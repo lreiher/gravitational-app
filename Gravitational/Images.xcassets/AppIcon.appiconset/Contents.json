@@ -3,20 +3,26 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "AppIconSettings.png",
+      "filename" : "iphone_29@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "AppIconSpotlight.png",
+      "filename" : "iphone_40@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "AppIcon.png",
+      "filename" : "iphone_60@2x.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "iphone_60@3x.png",
+      "scale" : "3x"
     },
     {
       "idiom" : "ipad",

@@ -5,116 +5,158 @@
 //  Copyright (c) 2014 Lennart Reiher. All rights reserved.
 //
 
+/*-------------------------*/
 #import "GameScene.h"
-#import "TaskGenerator.h"
+
+#import "MenuScene.h"
+#import "GameOverScene.h"
+
+#import "GCHelper.h"
+
 #import "Arrow.h"
-#import "Floor.h"
 #import "Background.h"
-#import "PauseButton.h"
-#import "TaskObstacle.h"
+#import "Ceiling.h"
+#import "Floor.h"
+#import "TaskGenerator.h"
+#import "Wall.h"
+#import "Obstacle.h"
+/*-------------------------*/
 
+@implementation GameScene {
+    
+    BOOL alive;
+    BOOL paused;
+    BOOL pausable;
+    
+    BOOL musicOn;
+    BOOL soundOn;
+    
+    CGFloat gravity;
+    
+    SKNode* nodeForPausableActions;
+    
+    NSMutableArray* background;
+    Floor* fl;
+    Ceiling* cl;
+    Arrow* arr;
+    SKLabelNode* countdown;
+    
+    TaskGenerator* taskGenerator;
+}
 
-@implementation GameScene
+@synthesize delegate = _delegate;
 
-//instance variables
+#pragma mark Initializer
 
-CGSize gameArea;
-
-SKLabelNode* taskLabel;
-
-SKSpriteNode* arrow;
-SKSpriteNode* floorsOverlay;
-
-CGFloat gravity = -2.5;
-
-//for collision detection
-static const uint32_t arrowCategory = 0x1 << 0;
-static const uint32_t obstacleCategory = 0x1 << 1;
-
-
-
--(id)initWithSize:(CGSize)size {    
+-(id)initWithSize:(CGSize)size {
+    
     if (self = [super initWithSize:size]) {
         
-        [self setupSceneWithSize:size];
+        if ([Global globals].ADS) {
+            [Global globals].GAME_AREA = CGSizeMake(size.width, size.height - [Global globals].BANNER_AREA.height);
+        } else {
+            [Global globals].GAME_AREA = size;
+        }
         
+        [self setupInitialValues];
+        [self setupPhysicsWorld];
+        [self setupNodeForPausableActions];
+        [self setupBackground];
+        [self setupFloor];
+        [self setupCeiling];
+        [self setupArrow];
+        [self setupTaskGenerator];
+        if ([Global globals].ADS) {[self setupAdPlaceholder];}
     }
     return self;
 }
 
 
 
--(void)setupSceneWithSize:(CGSize)pSize {
-    NSInteger bannerHeight = 50;
-    
-    gameArea = CGSizeMake(pSize.width, pSize.height - bannerHeight);
-    
-    self.physicsWorld.gravity = CGVectorMake(0, gravity);
-    
-    self.physicsWorld.contactDelegate = self;
-    
-    self.backgroundColor = [SKColor whiteColor];
-    [self animateBackground];
-    [self animateFloors];
-    
-    SKSpriteNode* pauseButton = [PauseButton pauseButtonWithPosition:CGPointMake(gameArea.width - [SKTexture textureWithImageNamed:@"pause"].size.width / 2 - 5, gameArea.height - [SKTexture textureWithImageNamed:@"pause"].size.height / 2 - 4)];
-    [self addChild:pauseButton];
-    
-    arrow = [Arrow arrowWithPosition:CGPointMake(gameArea.width / 2, gameArea.height / 2)];
-    arrow.physicsBody.categoryBitMask = arrowCategory;
-    arrow.physicsBody.contactTestBitMask = obstacleCategory;
-    arrow.physicsBody.collisionBitMask = 1;
-    [self addChild:arrow];
-    
+#pragma mark Delegate Methods
 
+-(void)didMoveToView:(SKView *)view {
     
-    NSString* task = [TaskGenerator generate2DigitTask];
-    NSLog(@"%@", task);
-    [self generateAllTaskObstaclesWithTask:task];
-
+    arr.physicsBody.velocity = CGVectorMake(0, 0);
+    [_delegate showAdsAtTop:YES];
+    if (musicOn) {
+        [Global globals].MUSICPLAYER.volume = 1.0;
+        [self setupMusic];
+    }
     
+    [_delegate sendGAIScreen:@"Game Scene"];
 }
-
-
 
 -(void)update:(CFTimeInterval)currentTime {
-    // Called before each frame is rendered
     
-    self.physicsWorld.gravity = CGVectorMake(0, gravity);   //react to a change in gravity
+    self.physicsWorld.gravity = CGVectorMake(0.0, gravity);
     
-    arrow.position = CGPointMake(gameArea.width / 4, arrow.position.y);  //stationary x-Position
-    arrow.physicsBody.velocity = CGVectorMake(0, arrow.physicsBody.velocity.dy);    //no dx
-    arrow.physicsBody.angularVelocity = 0.0;
-    arrow.zRotation = 2 * (arrow.position.y - gameArea.height / 2) / (gameArea.height - 2 * floorsOverlay.size.height) * atan(0.5);
+    if (alive) arr.position = CGPointMake([Global globals].GAME_AREA.width / 4, arr.position.y);  //stationary x-Position
     
-    //overlay for inactive floor
-    if (gravity > 0) {
-        floorsOverlay.position = CGPointMake(gameArea.width / 2, floorsOverlay.size.height / 2);
-    } else {
-        floorsOverlay.position = CGPointMake(gameArea.width / 2, gameArea.height - floorsOverlay.size.height / 2);
-    }
+    arr.physicsBody.velocity = CGVectorMake(0.0, arr.physicsBody.velocity.dy);    //no dx
+    arr.physicsBody.angularVelocity = 0.0;
+    
+    arr.zRotation = 2 * (arr.position.y - [Global globals].GAME_AREA.height / 2) / ([Global globals].GAME_AREA.height - 100) * atan(0.5);
+    
+    [cl updateScore];
 }
-
-
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    // Called when a touch begins
     
-    //checks for pause-button
-    UITouch* touch = [touches anyObject];
-    CGPoint touchLocation = [touch locationInNode:self];
-    SKNode* pauseNode = [self nodeAtPoint:touchLocation];
-    if ([pauseNode.name isEqualToString:@"pauseGame"]) {
-        self.view.paused = !self.view.paused;
-    }
-    else if (!self.view.paused) {
-        gravity = -gravity;
+    CGPoint touchPos = [[touches anyObject] locationInNode:self];
+    SKNode* touchedNode = [self nodeAtPoint:touchPos];
+    
+    if ([touchedNode.name isEqualToString:@"menu"]) {
+        touchedNode.alpha = 0.5;
     }
 }
 
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 
+    [fl childNodeWithName:@"menu"].alpha = 0.0;
+    
+    CGPoint touchPos = [[touches anyObject] locationInNode:self];
+    SKNode* touchedNode = [self nodeAtPoint:touchPos];
+    
+    if ([touchedNode.name isEqualToString:@"pause"]) {
+        if (!paused && pausable && alive) {
+            [self pauseGame];
+        } else if (paused) {
+            [self unpauseGame];
+        }
+    }
+    else if ([touchedNode.name isEqualToString:@"menu"]) {
+        [self switchToMenu];
+    }
+    else if (!paused) {
+        gravity = -gravity;
+        if (soundOn) {
+            [self runAction:[SKAction playSoundFileNamed:@"soundGravity.caf" waitForCompletion:NO]];
+        }
+    }
+}
+
+-(void)handlePan:(UIPanGestureRecognizer*)recognizer {
+    
+    [fl childNodeWithName:@"menu"].alpha = 0.0;
+    
+    CGPoint trans = [recognizer translationInView:recognizer.view];
+    CGPoint veloc = [recognizer velocityInView:recognizer.view];
+    
+    if (paused && recognizer.state == UIGestureRecognizerStateChanged) {
+        [fl handlePanDownWithTranslation:trans andVelocity:veloc];
+        [recognizer setTranslation:CGPointZero inView:recognizer.view];
+    } else if (paused && recognizer.state == UIGestureRecognizerStateEnded) {
+        if (veloc.y > 550.0) {
+            [fl handleQuickSwipeWithTranslation:trans andVelocity:veloc];
+        } else if ([fl needsToBeUnpaused]) {
+            [self unpauseGame];
+        }
+    } 
+}
 
 -(void)didBeginContact:(SKPhysicsContact*)contact {
+    
     SKPhysicsBody *firstBody, *secondBody;
     if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
         firstBody = contact.bodyA;
@@ -125,98 +167,401 @@ static const uint32_t obstacleCategory = 0x1 << 1;
         secondBody = contact.bodyA;
     }
     
-    if ((firstBody.categoryBitMask == arrowCategory) && (secondBody.categoryBitMask == obstacleCategory)) {
-        [self computeCollisionBetweenArrow:(SKSpriteNode*)firstBody.node andObstacle:(SKSpriteNode*)secondBody.node];
+    if ((firstBody.categoryBitMask == [Global globals].ARROW_CAT) && (secondBody.categoryBitMask == [Global globals].OBSTACLE_CAT)) {
+        [self computeCollisionWithObstacle:(Obstacle*)secondBody.node];
+    } else if ((firstBody.categoryBitMask == [Global globals].ARROW_CAT) && (secondBody.categoryBitMask == [Global globals].RESULT_CAT)) {
+        [self computeCollisionWithResult:secondBody.node];
     }
+}
+
+#pragma mark Work
+
+-(void)reactToInterruption {
+    if (!paused && alive) {
+        [self pauseGame];
+        if (countdown.parent != nil) {
+            [countdown removeFromParent];
+        }
+    }
+    if ([[Global globals].USERDEFAULTS integerForKey:@"bestScore"] < [Global globals].SCORE) {
+        [[Global globals].USERDEFAULTS setInteger:[Global globals].SCORE forKey:@"bestScore"];
+        [[Global globals].USERDEFAULTS synchronize];
+    }
+}
+
+-(void)pauseGame {
+    
+    paused = true;
+    pausable = true;
+    
+    [self removeActionForKey:@"waitThenUnpause"];
+    
+    self.physicsWorld.speed = 0.0;
+    
+    [self enumerateChildNodesWithName:@"obstaclePausable"
+                           usingBlock:^(SKNode* node, BOOL* stop) {
+        node.paused = true;
+        node.speed = 0.0;
+        node.alpha = 0.0;
+    }];
+    
+    [arr animatePause:false
+             duration:0.5];
+    [arr animatePause:true duration:0.5];
+    [fl animatePause:true
+            duration:0.5];
+    [cl animatePause:true
+            duration:0.5];
+}
+
+-(void)unpauseGame {
+    
+    paused = false;
+    pausable = false;
+    
+    [arr animatePause:false
+             duration:0.5];
+    [fl animatePause:false
+            duration:0.5];
+    [cl animatePause:false
+            duration:0.5];
+    
+    [self setupCountdown];
+    
+    SKAction* wait = [SKAction waitForDuration:3.5 / [Global globals].SPEED];
+    
+    void (^unpauseBlock)(void) = ^{
+        //might have been paused again by going to background
+        if (!paused) {
+            NSLog(@"unpauseBlock");
+            [self enumerateChildNodesWithName:@"obstaclePausable" usingBlock:^(SKNode* node, BOOL* stop) {
+                node.paused = false;
+                node.speed = 1.0;
+                [node runAction:[SKAction fadeAlphaTo:1.0 duration:0.5 / [Global globals].SPEED]];
+            }];
+            
+            arr.physicsBody.categoryBitMask = [Global globals].ARROW_CAT;
+            arr.physicsBody.velocity = CGVectorMake(0.0, 0.0);
+            self.physicsWorld.speed = [Global globals].SPEED;
+            
+            paused = false;
+            pausable = true;
+        } else {
+            NSLog(@"did not run unpause block");
+        }
+    };
+    
+    SKAction* unpause = [SKAction runBlock:unpauseBlock];
+    
+    SKAction* waitThenUnpause = [SKAction sequence:@[wait,unpause]];
+    
+    [self runAction:waitThenUnpause withKey:@"waitThenUnpause"];
+}
+
+-(void)startCountdownWithInitialFontSize:(NSInteger)fs {
+    
+    [countdown runAction:[SKAction sequence:@[
+                                              [SKAction waitForDuration:0.5 / [Global globals].SPEED],
+                                              [SKAction runBlock:^{
+        countdown.alpha = 1.0;
+        for (int i = 1; i < countdown.fontSize * 3; i++) {
+            [countdown runAction:[SKAction sequence:@[
+                                                      [SKAction waitForDuration:i/(countdown.fontSize * [Global globals].SPEED)],
+                                                      [SKAction runBlock:^{
+                countdown.fontSize = countdown.fontSize - 1;
+                if(i == fs - 1) {
+                    countdown.text = @"2";
+                    countdown.fontSize = fs;
+                } else if (i == 2 * (fs - 1)) {
+                    countdown.text = @"1";
+                    countdown.fontSize = fs;
+                }}
+                                                       ]]]];
+        }}],
+                                              [SKAction waitForDuration:3.0 / [Global globals].SPEED],
+                                              [SKAction removeFromParent]]]];
 }
 
 
 
 
--(void)computeCollisionBetweenArrow:(SKSpriteNode*)pArrow andObstacle:(SKSpriteNode*)pObstacle {
-    NSLog(@"Hit");
+
+
+
+
+
+
+-(void)computeCollisionWithObstacle:(Obstacle*)pObstacle {
     
-    //burst effect
+    alive = false;
+    NSLog(@"YOU LOST: HIT OBSTACLE");
     NSString *burstPath = [[NSBundle mainBundle] pathForResource:@"ArrowBurst" ofType:@"sks"];
     SKEmitterNode *burstNode = [NSKeyedUnarchiver unarchiveObjectWithFile:burstPath];
-    burstNode.position = arrow.position;
+    burstNode.position = arr.position;
     burstNode.zPosition = 100.0;
-    //[pArrow removeFromParent];
     [self addChild:burstNode];
+    [arr removeFromParent];
+    if (soundOn) {
+        SKAction* sound = [SKAction playSoundFileNamed:@"soundCrash.caf" waitForCompletion:NO];
+        [self runAction:sound];
+    }
+    nodeForPausableActions.paused = true;
+    nodeForPausableActions.speed = 0.0;
+    [self handleGameOverDueToSpikes:YES];
+}
+
+-(void)computeCollisionWithResult:(SKNode*)pResultNode {
+    if ([pResultNode.name hasPrefix:@"correct"]) {
+        if (soundOn) {
+            SKAction* sound = [SKAction playSoundFileNamed:@"soundCorrect.caf" waitForCompletion:NO];
+            [self runAction:sound];
+        }
+        [(Wall*)pResultNode.parent letWallDisappear:pResultNode];
+        [Global globals].CORRECTANSWERSCOUNT = [Global globals].CORRECTANSWERSCOUNT + 1;
+        pResultNode.name = @"alreadTouchedCorrect";
+    } else if ([pResultNode.name isEqualToString:@"wrong"]) {
+        alive = false;
+        NSLog(@"YOU LOST: WRONG RESULT");
+        if (soundOn) {
+            SKAction* sound = [SKAction playSoundFileNamed:@"soundWrong.caf" waitForCompletion:NO];
+            [self runAction:[SKAction sequence:@[sound,[SKAction waitForDuration:0.3],sound]]];
+        }
+        [pResultNode runAction:[SKAction fadeAlphaTo:0.0 duration:0.75 / [Global globals].SPEED]];
+        [self handleGameOverDueToSpikes:NO];
+        pResultNode.name = @"alreadyTouchedWrong";
+    }
+}
+
+-(void)handleGameOverDueToSpikes:(BOOL)boolSpikes {
+    
+    if (boolSpikes) {
+        [self switchToGameOverAfterDelay:1.0];
+    } else {
+        [self switchToGameOverAfterDelay:3.0];
+    }
+    
+    if ([[Global globals].USERDEFAULTS integerForKey:@"bestScore"] < [Global globals].SCORE) {
+        [[Global globals].USERDEFAULTS setInteger:[Global globals].SCORE forKey:@"bestScore"];
+        [[Global globals].USERDEFAULTS synchronize];
+    }
+    
+    [[GCHelper defaultHelper] reportScore:[[Global globals].USERDEFAULTS integerForKey:@"bestScore"] forLeaderboardID:[Global globals].LEADERBOARDID];
+}
+
+-(void)switchToGameOverAfterDelay:(double)pDelay {
+    if (musicOn) {
+        [Global globals].MUSICPLAYER.volume = 0.05;
+    }
+    [self runAction:
+                    [SKAction sequence:
+                                        @[[SKAction waitForDuration:pDelay / [Global globals].SPEED],
+                                          [SKAction runBlock:^{
+                                                                [_delegate presentGameOver];
+                    }]]]];
+    
+}
+
+-(void)switchToMenu {
+    [[Global globals].MUSICPLAYER stop];
+    [_delegate presentMenu];
 }
 
 
 
--(void)generateAllTaskObstaclesWithTask:(NSString*)pTask {
-    //put single characters of task into array
-    NSString* taskWithoutResult = [[pTask componentsSeparatedByString:@"="] objectAtIndex:0];
-    NSMutableArray* characters = [[NSMutableArray alloc] initWithCapacity:[taskWithoutResult length]];
-    for (int i = 0; i < [taskWithoutResult length]; ++i) {
-        if ([taskWithoutResult characterAtIndex:i] != ' ') {
-            if ([taskWithoutResult characterAtIndex:i+1] == ' ') {
-                [characters addObject:[NSString stringWithFormat:@"%c",[taskWithoutResult characterAtIndex:i]]];
-            } else {
-                [characters addObject:[NSString stringWithFormat:@"%c%c",[taskWithoutResult characterAtIndex:i],[taskWithoutResult characterAtIndex:i+1]]];
-                i += 1;
-            }
+
+
+
+
+-(NSMutableArray*)operasFromTask:(NSString*)pTask {
+    
+    NSString* taskNoResult = [[pTask componentsSeparatedByString:@"="] objectAtIndex:0];
+    NSLog(@"%@",taskNoResult);
+    NSMutableArray* operas = [[NSMutableArray alloc] init];
+    NSInteger lastSpaceAt = -1;
+    for (int i = 0; i < taskNoResult.length; i++) {
+        if ([taskNoResult characterAtIndex:i] == ' ') {
+            [operas addObject:[[taskNoResult substringFromIndex:lastSpaceAt + 1] substringToIndex:i - (lastSpaceAt + 1)]];
+            lastSpaceAt = i;
         }
     }
+    return operas;
+}
+
+-(NSMutableArray*)resultsFromTask:(NSString*)pTask {
     
-    //generate obstacles
-    for (int i = 0; i < [characters count]; ++i) {
-        [self performSelector:@selector(generateSingleObstacleWithSymbol:) withObject:[characters objectAtIndex:i] afterDelay: 5 * i];
+    NSString* resultOnly = [[pTask componentsSeparatedByString:@"="] objectAtIndex:1];
+    NSString* noSpaces = [resultOnly stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSMutableArray* results = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [noSpaces componentsSeparatedByString:@","].count; i++) {
+        [results addObject:[[noSpaces componentsSeparatedByString:@","] objectAtIndex:i]];
+    }
+    return results;
+}
+
+-(void)newObstaclesWithOperas:(NSMutableArray*)pOperas {
+    
+    for (int i = 0; i < pOperas.count; i++) {
+        SKAction* wait = [SKAction waitForDuration:3.0 * i / [Global globals].SPEED];
+        SKAction* create = [SKAction runBlock:^{
+            CGFloat yPos = (arc4random_uniform(601) + 200) / 1000.0 * [Global globals].GAME_AREA.height;     //yPos 20%-80%
+            Obstacle* obst = [Obstacle obstacleWithYPosition:yPos andString:[pOperas objectAtIndex:i]];
+            [self addChild:obst];
+            SKAction* waitBeforeRemoval = [SKAction waitForDuration:6.0 / [Global globals].SPEED];
+            SKAction* remove = [SKAction removeFromParent];
+            [obst runAction:[SKAction sequence:@[waitBeforeRemoval,remove]]];
+        }];
+        [nodeForPausableActions runAction:[SKAction sequence:@[wait,create]]];
+    }
+}
+         
+-(void)newWallWithResults:(NSMutableArray*)pResults afterOperas:(NSInteger)pOps {
+    
+    SKAction* wait = [SKAction waitForDuration:(3.0 * pOps + 1.0)/ [Global globals].SPEED];
+    SKAction* create = [SKAction runBlock:^{
+        Wall* w = [Wall wallWithResults:pResults];
+        [self addChild:w];
+    }];
+    [nodeForPausableActions runAction:[SKAction sequence:@[wait,create]]];
+}
+
+-(void)newTask {
+    
+    if (alive) {
+        NSString* task = [taskGenerator newTask];
+        
+        NSMutableArray* operas = [self operasFromTask:task];
+        
+        [self newObstaclesWithOperas:operas];
+        
+        NSMutableArray* results = [self resultsFromTask:task];
+        
+        [self newWallWithResults:results afterOperas:operas.count];
     }
 }
 
--(void)generateSingleObstacleWithSymbol:(NSString*)pSymbol {
-    CGFloat xPos = gameArea.width;
-    CGFloat yPos = (arc4random() % 601 + 200) / 1000.0 * gameArea.height;
-    SKSpriteNode* obstacle = [TaskObstacle taskObstacleWithSymbol:pSymbol andPosition:CGPointMake(xPos, yPos) andScale:1];
-    obstacle.physicsBody.categoryBitMask = obstacleCategory;
-    obstacle.physicsBody.contactTestBitMask = arrowCategory;
-    obstacle.physicsBody.collisionBitMask = 0;
-    [self addChild:obstacle];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma mark Setup
+
+-(void)setupInitialValues {
+    
+    alive = true;
+    paused = false;
+    pausable = true;
+    musicOn = [[Global globals].USERDEFAULTS boolForKey:@"music"];
+    soundOn = [[Global globals].USERDEFAULTS boolForKey:@"sounds"];
+    [Global globals].SCORE = 0;
+    [Global globals].CORRECTANSWERSCOUNT = 0;
 }
 
-
-
--(void)animateBackground {
-    SKAction* moveBackground = [SKAction moveByX:-gameArea.width / 2 y:0 duration:30.0];
-    SKAction* resetBackground = [SKAction moveByX:gameArea.width / 2 y:0 duration:0.0];
-    SKAction* animateBackgroundForever = [SKAction repeatActionForever:[SKAction sequence:@[moveBackground,resetBackground]]];
+-(void)setupPhysicsWorld {
     
+    gravity = [Global globals].GRAVITY;
+    self.physicsWorld.gravity = CGVectorMake(0, gravity);
+    self.physicsWorld.contactDelegate = self;
+    self.physicsWorld.speed = [Global globals].SPEED;
+}
+
+-(void)setupNodeForPausableActions {
+    
+    nodeForPausableActions = [SKNode node];
+    nodeForPausableActions.name = @"obstaclePausable";
+    [self addChild:nodeForPausableActions];
+}
+
+-(void)setupBackground {
+    
+    self.backgroundColor = [Global globals].BG_COLOR;
+    background = [[NSMutableArray alloc] initWithCapacity:3];
     for (int i = 0; i < 3; ++i) {
-        SKSpriteNode* background = [Background backgroundWithPosition:CGPointMake(gameArea.width * i, self.frame.size.height / 2)];
-        
-        [background runAction:animateBackgroundForever];
-        
-        [self addChild:background];
+        Background* bg = [Background backgroundWithPosition:CGPointMake([Global globals].GAME_AREA.width * i, 0)];
+        [background addObject:bg];
+        [self addChild:bg];
     }
 }
 
-
-
--(void)animateFloors {
-    SKAction* moveFloors = [SKAction moveByX:-gameArea.width y:0 duration:20.0];
-    SKAction* resetFloors = [SKAction moveByX:gameArea.width y:0 duration:0.0];
-    SKAction* animateFloorsForever = [SKAction repeatActionForever:[SKAction sequence:@[moveFloors,resetFloors]]];
+-(void)setupFloor {
     
-    for (int i = 0; i < 3; ++i) {
-        SKSpriteNode* floor = [Floor floorWithPosition:CGPointMake(gameArea.width * i, [SKTexture textureWithImageNamed:@"floor"].size.height / 2) andScale:1.0];
-        SKSpriteNode* ceiling = [Floor floorWithPosition:CGPointMake(gameArea.width * i, gameArea.height - floor.size.height / 2) andScale:-1.0];
-        
-        [floor runAction:animateFloorsForever];
-        [ceiling runAction:animateFloorsForever];
-        
-        [self addChild:floor];
-        [self addChild:ceiling];
-        
-        //overlay for inactive floor
-        if (i == 0) {
-            floorsOverlay = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithWhite:1 alpha:0.75] size:CGSizeMake(floor.size.width, floor.size.height - 2.5)];
-            floorsOverlay.zPosition = 35.0;
-            [self addChild:floorsOverlay];
-        }
+    fl = [Floor floorWithPosition:CGPointMake(0, 0)];
+    [self addChild:fl];
+}
+
+-(void)setupCeiling {
+    
+    cl = [Ceiling ceilingWithPosition:CGPointMake(0, [Global globals].GAME_AREA.height)];
+    [self addChild:cl];
+}
+
+-(void)setupArrow {
+    
+    arr = [Arrow arrowWithPosition:CGPointMake([Global globals].GAME_AREA.width / 4, [Global globals].GAME_AREA.height / 2) andPhysicsBody:YES];
+    [self addChild:arr];
+}
+
+-(void)setupTaskGenerator {
+    
+    taskGenerator = [TaskGenerator initTaskGenerator];
+    SKAction* generateNewTaskPeriodically = [SKAction repeatActionForever:
+                                             [SKAction sequence:@[
+                                                                  [SKAction waitForDuration:1.0 / [Global globals].SPEED],
+                                                                  [SKAction performSelector:@selector(newTask)
+                                                                                   onTarget:self],
+                                                                  [SKAction waitForDuration:12.5 / [Global globals].SPEED]]]];
+    
+    SKAction* increaseScore = [SKAction repeatActionForever:
+                               [SKAction sequence:@[
+                                                    [SKAction waitForDuration:0.1 / [Global globals].SPEED],
+                                                    [SKAction runBlock:
+                                                     ^{ if(alive) [Global globals].SCORE = [Global globals].SCORE + 1; }]]]];
+    
+    [nodeForPausableActions runAction:generateNewTaskPeriodically];
+    [nodeForPausableActions runAction:increaseScore];
+}
+
+-(void)setupAdPlaceholder {
+    SKSpriteNode* adPlaceholder = [SKSpriteNode spriteNodeWithColor:[Global globals].FONT_COLOR
+                                                               size:[Global globals].BANNER_AREA];
+    adPlaceholder.anchorPoint = CGPointMake(0, 0);
+    adPlaceholder.position = CGPointMake(0, [Global globals].GAME_AREA.height);
+    adPlaceholder.zPosition = 20.0;
+    [self addChild:adPlaceholder];
+}
+
+-(void)setupCountdown {
+    countdown = [SKLabelNode labelNodeWithFontNamed:[Global globals].FONT_NAME];
+    NSInteger fs = 70;
+    countdown.fontSize = fs;
+    countdown.fontColor = [Global globals].FONT_COLOR;
+    countdown.position = CGPointMake([Global globals].GAME_AREA.width / 2, [Global globals].GAME_AREA.height / 2);
+    countdown.text = @"3";
+    countdown.alpha = 0.0;
+    [self addChild:countdown];
+    
+    [self startCountdownWithInitialFontSize:fs];
+}
+
+-(void)setupMusic {
+    
+    if (![[Global globals].MUSICPLAYER.url.resourceSpecifier hasSuffix:@"backgroundInGame.mp3"]) {
+        [Global globals].MUSICPLAYER = [[Global globals].MUSICPLAYER initWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"backgroundInGame"
+                                                                                                                   withExtension:@"mp3"]
+                                                                                     error:nil];
+        [Global globals].MUSICPLAYER.numberOfLoops = -1;
+        [[Global globals].MUSICPLAYER prepareToPlay];
+        [[Global globals].MUSICPLAYER play];
     }
 }
 
